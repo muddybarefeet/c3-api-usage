@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import c3 from 'c3';
+
 // import logo from './logo.svg';
 import './App.css';
-
-// The back of the cards
-const POKEBALL = "http://vignette3.wikia.nocookie.net/youtubepoop/images/4/4c/Pokeball.png/revision/latest"
-
-// The front of the cards
-const BULBASAUR = "http://cdn.bulbagarden.net/upload/2/21/001Bulbasaur.png"
-const CHARMANDER = "http://cdn.bulbagarden.net/upload/thumb/7/73/004Charmander.png/600px-004Charmander.png"
-const SQUIRTLE = "http://cdn.bulbagarden.net/upload/thumb/3/39/007Squirtle.png/250px-007Squirtle.png"
-const PIKACHU = "http://cdn.bulbagarden.net/upload/0/0d/025Pikachu.png"
-const JIGGLYPUFF = "http://cdn.bulbagarden.net/upload/thumb/3/3e/039Jigglypuff.png/250px-039Jigglypuff.png"
-const ABRA = "http://cdn.bulbagarden.net/upload/6/62/063Abra.png"
-const GYARADOS = "http://cdn.bulbagarden.net/upload/4/41/130Gyarados.png"
-const MEWTWO = "http://cdn.bulbagarden.net/upload/thumb/7/78/150Mewtwo.png/250px-150Mewtwo.png"
 
 
 class App extends Component {
@@ -21,18 +11,55 @@ class App extends Component {
   constructor() {
    super();
    this.state = {
-     
    };
   }
 
+  componentDidMount(){
+    this.buildChart();
+  }
+
+  buildChart () {
+    let chart = c3.generate({
+      bindto: ReactDOM.findDOMNode(this.refs.chart),
+      data: {
+          x: 'x',
+          columns: [
+              ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06', '2013-01-07', '2013-01-08', '2013-01-09', '2013-01-10', '2013-01-11', '2013-01-12','2013-01-13', '2013-01-14', '2013-01-15', '2013-01-16', '2013-01-17', '2013-01-18', '2013-01-19', '2013-01-20', '2013-01-21', '2013-01-22'],
+              ['y', 30, 200, 100, 400, 150, 250, 30, 200, 100, 400, 150, 250,30, 200, 100, 400, 150, 250, 30, 200, 100, 400, 150, 250]
+          ]
+      },
+      axis: {
+          x: {
+              type: 'timeseries',
+              tick: {
+                  format: '%d'
+              }
+          },
+          y: {
+            max: 3000,
+            min: 0,
+            padding: {top:0, bottom:0}
+          }
+      },
+      grid: {
+          y: {
+              lines: [
+                  {value: 2500, text: 'Free-tier', axis: 'y', position: 'start'},
+              ]
+          }
+      }
+    });
+    // chart.axis.range({max: {x: 30}, min: {x: 1}});
+    //how to get month shown and how to get only line tooltip shown
+  }
 
 
   render() {
 
-
     return (
       <div className="App">
-        
+        <h1>API Usage</h1>
+        <div ref="chart"></div>
       </div>
     );
   }
